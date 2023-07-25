@@ -1,6 +1,6 @@
 from PIL import Image
 
-im = Image.open('<Your-Image-Path-Here>') #TODO: change to your r/place image path
+im = Image.open('<Your-Image-Path-Goes-Here>')  # TODO: change to your r/place image path
 
 colors = {
     'burgundy': (109, 0, 26, 255),
@@ -40,16 +40,21 @@ colors = {
 pixel_count = []
 for color, pixel in colors.items():
     pixel_count.append({"color": color, "count": 0})
-
 for pixel in im.getdata():
     count = 0
     for color, pixel_value in colors.items():
         if pixel == pixel_value:
             pixel_count[count]["count"] += 1
+            break
         count += 1
 
 pixel_count = sorted(pixel_count, key=lambda d: d["count"], reverse=True)
 
 if __name__ == "__main__":
+    sum_of_pixel = 0
     for pixel_type in pixel_count:
-        print(pixel_type["color"] + ":", pixel_type["count"])
+        sum_of_pixel += pixel_type["count"]
+        print(pixel_type["color"].capitalize() + ":", pixel_type["count"])
+    if sum_of_pixel != 6000000:
+        print("Something went wrong! Check your picture!")
+    print("All Pixel:", sum_of_pixel)
