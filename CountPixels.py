@@ -1,6 +1,6 @@
 from PIL import Image
 
-im = Image.open('place-1690285095445.png')
+im = Image.open('<Your-Image-Path-Here>') #TODO: change to your r/place image path
 
 colors = {
     'burgundy': (109, 0, 26, 255),
@@ -17,7 +17,7 @@ colors = {
     'light_teal': (0, 204, 192, 255),
     'dark_blue': (36, 80, 164, 255),
     'blue': (54, 144, 234, 255),
-    'light_blue': (81, 232, 244, 255),
+    'light_blue': (81, 233, 244, 255),
     'indigo': (73, 58, 193, 255),
     'periwinkle': (106, 92, 255, 255),
     'lavender': (148, 179, 255, 255),
@@ -34,16 +34,22 @@ colors = {
     'dark_gray': (81, 82, 82, 255),
     'gray': (137, 141, 144, 255),
     'light_gray': (212, 215, 217, 255),
-    'white': (255, 255, 255, 255),
+    'white': (255, 255, 255, 255)
 }
 
-pixel_count = {}
+pixel_count = []
 for color, pixel in colors.items():
-    pixel_count[color] = 0
+    pixel_count.append({"color": color, "count": 0})
 
 for pixel in im.getdata():
+    count = 0
     for color, pixel_value in colors.items():
         if pixel == pixel_value:
-            pixel_count[color] += 1
+            pixel_count[count]["count"] += 1
+        count += 1
 
-print(pixel_count)
+pixel_count = sorted(pixel_count, key=lambda d: d["count"], reverse=True)
+
+if __name__ == "__main__":
+    for pixel_type in pixel_count:
+        print(pixel_type["color"] + ":", pixel_type["count"])
